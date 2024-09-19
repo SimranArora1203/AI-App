@@ -16,7 +16,7 @@ const UsageTrack = () => {
    },[user]);
    const getData=async()=>{
     let result:OutputItem[];
-    result=await db.select().from(AIOutput).where(eq(AIOutput.createdBy,user?.primaryEmailAddress?.emailAddress));
+    result = await db.select().from(AIOutput).where(eq(AIOutput.createdBy, user?.primaryEmailAddress?.emailAddress as string));
     getTotalUsage(result);
    }
    const getTotalUsage=(result:OutputItem[])=>{
