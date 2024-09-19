@@ -1,6 +1,21 @@
-import { SignUp } from '@clerk/nextjs'
-
+"use client";
+import { SignUp, useAuth } from '@clerk/nextjs';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 export default function Page() {
+  const { userId } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (userId) {
+      // Redirect to the dashboard or render the appropriate content for signed-in users
+      router.push('../../dashboard');
+    }
+  }, [userId, router]);
+
+  if (userId) {
+    return null;
+  }
   return(
     <div className="flex items-center justify-center p-10">
     <SignUp appearance={{
@@ -13,7 +28,7 @@ export default function Page() {
             formButtonPrimary: 'bg-blue-500 text-white rounded-md py-2 px-4 hover:bg-blue-600',
           },
         }}
-         redirectUrl="/dashboard"
+      redirectUrl="/dashboard"
         />
 </div>
   )
